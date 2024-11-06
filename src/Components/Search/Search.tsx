@@ -1,18 +1,12 @@
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 
-type Props = {};
+interface Props {
+  onClick: (e: SyntheticEvent) => void;
+  search: string | undefined;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
 
-const Search: React.FC<Props> = () => {
-  const [search, setSearch] = useState<string>("")
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  }
-
-  const onClick = (e: SyntheticEvent ) => {
-
-  };
-
+const Search: React.FC<Props> = ({ onClick, search, handleChange }) => {
   return (
     <div>
       <input value={search} onChange={ (e) => handleChange(e) }></input>
