@@ -1,6 +1,6 @@
-import React, { SyntheticEvent } from 'react'
-import { CompanySearch } from '../../company';
-import AddPortfolio from '../Portfolio/AddPortfolio/AddPortfolio';
+import React, { SyntheticEvent } from "react";
+import { CompanySearch } from "../../company";
+import AddPortfolio from "../Portfolio/AddPortfolio/AddPortfolio";
 
 interface Props {
   id: string;
@@ -21,9 +21,12 @@ const Card: React.FC<Props> = ({ searchResult, onPortfolioCreate }: Props) => {
       <p className="info">
         {searchResult.exchangeShortName} - {searchResult.stockExchange}
       </p>
-      <AddPortfolio onPortfolioCreate={onPortfolioCreate} symbol={searchResult.symbol} />
+      <AddPortfolio
+        onPortfolioCreate={onPortfolioCreate}
+        symbol={searchResult.symbol}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

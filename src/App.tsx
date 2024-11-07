@@ -1,10 +1,10 @@
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
-import './App.css';
-import CardList from './Components/CardList/CardList';
-import Search from './Components/Search/Search';
-import { CompanySearch } from './company';
-import { searchCompanies } from './api';
-import ListPortfolio from './Components/Portfolio/ListPortfolio/ListPortfolio';
+import { ChangeEvent, SyntheticEvent, useState } from "react";
+import "./App.css";
+import CardList from "./Components/CardList/CardList";
+import Search from "./Components/Search/Search";
+import { CompanySearch } from "./company";
+import { searchCompanies } from "./api";
+import ListPortfolio from "./Components/Portfolio/ListPortfolio/ListPortfolio";
 
 function App() {
   const [search, setSearch] = useState<string>("");
@@ -14,36 +14,35 @@ function App() {
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  }
+  };
 
   const onPortfolioCreate = (e: any) => {
     e.preventDefault();
     const updatedPortfolio = [...portfolioValues, e.target[0].value];
     setPortfolioValues(updatedPortfolio);
-  }
+  };
 
-  const onSearchSubmit = async (e: SyntheticEvent ) => {
+  const onSearchSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const result = await searchCompanies(search);
-    if (typeof result === "string"){
+    if (typeof result === "string") {
       setServerError(result);
-    }
-    else if (Array.isArray(result.data)) {
+    } else if (Array.isArray(result.data)) {
       setSearchResult(result.data);
     }
   };
 
   return (
     <div className="App">
-      <Search 
-        onSearchSubmit={onSearchSubmit} 
-        search={search} 
+      <Search
+        onSearchSubmit={onSearchSubmit}
+        search={search}
         handleSearchChange={handleSearchChange}
       />
-      <ListPortfolio portfolioValues={portfolioValues}/>
-      <CardList 
-        searchResults={searchResult} 
-        onPortfolioCreate={onPortfolioCreate} 
+      <ListPortfolio portfolioValues={portfolioValues} />
+      <CardList
+        searchResults={searchResult}
+        onPortfolioCreate={onPortfolioCreate}
       />
       {serverError && <h1>{serverError}</h1>}
     </div>
