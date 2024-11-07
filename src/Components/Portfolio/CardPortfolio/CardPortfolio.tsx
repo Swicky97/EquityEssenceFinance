@@ -1,9 +1,22 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
+import { SynthesizedComment } from "typescript";
+import DeletePortfolio from "../DeletePortfolio/DeletePortfolio";
 
-type Props = {};
+interface Props {
+  portfolioValue: string;
+  onPortfolioDelete: (e: SyntheticEvent) => void;
+}
 
-const CardPortfolio: React.FC<Props> = (props) => {
-  return <div></div>;
+const CardPortfolio = ({ portfolioValue, onPortfolioDelete }: Props) => {
+  return (
+    <>
+      <h4>{portfolioValue}</h4>
+      <DeletePortfolio
+        portfolioValue={portfolioValue}
+        onPortfolioDelete={onPortfolioDelete}
+      />
+    </>
+  );
 };
 
 export default CardPortfolio;
