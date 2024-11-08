@@ -11,7 +11,7 @@ interface Props {
 const Card: React.FC<Props> = ({
   id,
   searchResult,
-  onPortfolioCreate
+  onPortfolioCreate,
 }: Props) => {
   return (
     <div
