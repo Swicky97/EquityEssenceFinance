@@ -3,7 +3,7 @@ import hero from "./hero.png";
 import "./Hero.css";
 import { Link } from "react-router-dom";
 
-interface Props { }
+interface Props {}
 
 const Hero = (props: Props) => {
   return (
@@ -18,7 +18,8 @@ const Hero = (props: Props) => {
             news.
           </p>
           <div className="mx-auto lg:mx-0">
-            <Link to="/search"
+            <Link
+              to="/search"
               className="py-5 px-10 text-2xl font-bold text-white bg-lightGreen rounded lg:py-4 hover:opacity-70"
             >
               Get Started

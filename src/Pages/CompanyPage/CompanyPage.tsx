@@ -7,7 +7,7 @@ import CompanyDashboard from "../../Components/CompanyDashboard/CompanyDashboard
 import Tile from "../../Components/Tile/Tile";
 import Spinner from "../../Components/Spinner/Spinner";
 
-interface Props { }
+interface Props {}
 
 const CompanyPage = (props: Props) => {
   let { ticker } = useParams();

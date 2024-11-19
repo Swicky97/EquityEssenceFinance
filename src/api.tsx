@@ -1,5 +1,10 @@
 import axios from "axios";
-import { CompanyKeyMetrics, CompanyProfile, CompanySearch } from "./company";
+import {
+  CompanyIncomeStatement,
+  CompanyKeyMetrics,
+  CompanyProfile,
+  CompanySearch,
+} from "./company";
 
 interface SearchResponse {
   data: CompanySearch[];
@@ -25,7 +30,7 @@ export const searchCompanies = async (query: string) => {
 export const getCompanyProfile = async (query: string) => {
   try {
     const data = await axios.get<CompanyProfile[]>(
-      `https://financialmodelingprep.com/api/v3/profile/${query}?apikey=${process.env.REACT_APP_API_KEY}`
+      `https://financialmodelingprep.com/api/v3/profile/${query}?apikey=${process.env.REACT_APP_API_KEY}`,
     );
     return data;
   } catch (error: any) {
@@ -36,7 +41,7 @@ export const getCompanyProfile = async (query: string) => {
 export const getKeyMetrics = async (query: string) => {
   try {
     const data = await axios.get<CompanyKeyMetrics[]>(
-      `https://financialmodelingprep.com/api/v3/key-metrics-ttm/${query}?limit=40&apikey=${process.env.REACT_APP_API_KEY}`
+      `https://financialmodelingprep.com/api/v3/key-metrics-ttm/${query}?limit=40&apikey=${process.env.REACT_APP_API_KEY}`,
     );
     return data;
   } catch (error: any) {
@@ -44,3 +49,13 @@ export const getKeyMetrics = async (query: string) => {
   }
 };
 
+export const getIncomeStatement = async (query: string) => {
+  try {
+    const data = await axios.get<CompanyIncomeStatement[]>(
+      `https://financialmodelingprep.com/api/v3/income-statement/${query}?limit=50&apikey=${process.env.REACT_APP_API_KEY}`,
+    );
+    return data;
+  } catch (error: any) {
+    console.log("error message: ", error.message);
+  }
+};

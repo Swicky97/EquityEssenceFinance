@@ -3,7 +3,7 @@ import logo from "./logo.png";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-interface Props { }
+interface Props {}
 
 const Navbar = (props: Props) => {
   return (
