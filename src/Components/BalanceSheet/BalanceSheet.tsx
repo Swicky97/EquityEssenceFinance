@@ -80,11 +80,11 @@ const BalanceSheet = (props: Props) => {
   const ticker = useOutletContext<string>();
   const [companyData, setCompanyData] = useState<CompanyBalanceSheet>();
   useEffect(() => {
-    const getCompanyData = async () => {
+    const fetchBalanceSheet = async () => {
       const value = await getBalanceSheet(ticker!);
       setCompanyData(value?.data[0]);
     };
-    getCompanyData();
+    fetchBalanceSheet();
   }, []);
   return (
     <>
