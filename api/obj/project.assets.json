@@ -3920,26 +3920,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\chase\\.nuget\\packages\\": {}
+    "C:\\Users\\chase.swick\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chase\\Desktop\\EquityEssenceFinance\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\chase.swick\\Desktop\\EquityEssenceFinance\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\chase\\Desktop\\EquityEssenceFinance\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\chase\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chase\\Desktop\\EquityEssenceFinance\\api\\obj\\",
+      "projectPath": "C:\\Users\\chase.swick\\Desktop\\EquityEssenceFinance\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\chase.swick\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\chase.swick\\Desktop\\EquityEssenceFinance\\api\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\chase\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\chase.swick\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3957,7 +3962,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net7.0": {
@@ -4021,7 +4027,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
