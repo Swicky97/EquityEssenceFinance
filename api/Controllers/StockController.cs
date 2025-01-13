@@ -1,5 +1,6 @@
 using api.Data;
 using api.Dtos.Stock;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ public class StockController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
     {
         var stocks = await _stockRepo.GetAllAsync();
 
@@ -55,7 +56,7 @@ public class StockController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest();
-            
+
         var stockModel = await _stockRepo.UpdateAsync(id, updateDTO);
 
         if (stockModel == null)
