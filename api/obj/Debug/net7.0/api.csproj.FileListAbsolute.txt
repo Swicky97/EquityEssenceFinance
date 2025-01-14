@@ -159,3 +159,5 @@ C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft
 C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
