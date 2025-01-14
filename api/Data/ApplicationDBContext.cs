@@ -33,7 +33,6 @@ public class ApplicationDBContext : IdentityDbContext<AppUser>
             .WithMany(u => u.Portfolios)
             .HasForeignKey(p => p.StockId);
 
-
         List<IdentityRole> roles = new List<IdentityRole>
         {
             new IdentityRole
