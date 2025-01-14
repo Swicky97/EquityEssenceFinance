@@ -20,7 +20,7 @@ public class StockController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
     {
-        var stocks = await _stockRepo.GetAllAsync();
+        var stocks = await _stockRepo.GetAllAsync(query);
 
         var stockDTO = stocks.Select(x => x.ToStockDTO());
 

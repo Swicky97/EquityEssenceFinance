@@ -54,7 +54,7 @@ public class CommentController : ControllerBase
         var commentModel = commentDTO.ToCommentFromCreate(stockId);
         await _commentRepo.CreateAsync(commentModel);
 
-        return CreatedAtAction(nameof(GetById), new { id = commentModel}, commentModel.ToCommentDTO());
+        return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToCommentDTO());
     }
 
     [HttpPut]
@@ -63,8 +63,8 @@ public class CommentController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest();
-            
-        var comment = await _commentRepo.UpdateAsync(id, updateDto.ToCommentFromUpdate(id));
+
+        var comment = await _commentRepo.UpdateAsync(id, updateDto.ToCommentFromUpdate());
 
         if (comment == null)
         {
