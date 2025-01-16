@@ -24,9 +24,9 @@ public class StockController : ControllerBase
     {
         var stocks = await _stockRepo.GetAllAsync(query);
 
-        var stockDTO = stocks.Select(x => x.ToStockDTO());
+        var stockDTOs = stocks.Select(x => x.ToStockDTO()).ToList();
 
-        return Ok(stocks);
+        return Ok(stockDTOs);
     }
 
     [HttpGet("{id:int}")]
