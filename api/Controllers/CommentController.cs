@@ -1,5 +1,6 @@
 using api.Dtos.Comment;
 using api.Extensions;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
@@ -30,9 +31,9 @@ public class CommentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] CommentQueryObject queryObject)
     {
-        var comments = await _commentRepo.GetAllAsync();
+        var comments = await _commentRepo.GetAllAsync(queryObject);
 
         var commentDTOs = comments.Select(x => x.ToCommentDTO());
 
