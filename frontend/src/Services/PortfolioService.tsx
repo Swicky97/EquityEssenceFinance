@@ -7,7 +7,7 @@ export const portfolioAddAPI = async (symbol: string) => {
     const response = await apiClient.post<PortfolioPost>(`portfolio`, null, {
       params: { symbol },
     });
-    return response.data;
+    return response;
   } catch (error) {
     HandleError(error);
   }
@@ -17,7 +17,7 @@ export const portfolioAddAPI = async (symbol: string) => {
 export const portfolioGetAPI = async () => {
   try {
     const response = await apiClient.get<PortfolioGet[]>(`portfolio`);
-    return response.data;
+    return response;
   } catch (error) {
     HandleError(error);
   }
@@ -29,7 +29,7 @@ export const portfolioDeleteAPI = async (symbol: string) => {
     const response = await apiClient.delete<PortfolioPost>(`portfolio`, {
       params: { symbol },
     });
-    return response.data;
+    return response;
   } catch (error) {
     HandleError(error);
   }

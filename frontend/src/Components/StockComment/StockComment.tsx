@@ -41,7 +41,7 @@ const StockComment = ({ stockSymbol }: Props) => {
     setLoading(true);
     commentGetAPI(stockSymbol).then((res) => {
       setLoading(false);
-      setComment(res?.data!);
+      setComment(res!.data);
     });
   };
   return (

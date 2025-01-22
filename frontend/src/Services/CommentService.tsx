@@ -12,7 +12,7 @@ export const commentPostAPI = async (
       title,
       content,
     });
-    return response.data;
+    return response;
   } catch (error) {
     HandleError(error);
   }
@@ -21,7 +21,7 @@ export const commentPostAPI = async (
 export const commentGetAPI = async (symbol: string) => {
   try {
     const response = await apiClient.get<CommentGet[]>(`comment/${symbol}`);
-    return response.data;
+    return response;
   } catch (error) {
     HandleError(error);
   }

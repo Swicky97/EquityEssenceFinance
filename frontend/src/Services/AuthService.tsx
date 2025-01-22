@@ -5,19 +5,17 @@ import { UserProfileToken } from "../Models/User";
 export const registerAPI = async (
   email: string,
   username: string,
-  password: string,
+  password: string
 ) => {
   try {
-    const response = await apiClient.post<UserProfileToken>(
-      "account/register",
-      {
-        email,
-        username,
-        password,
-      },
-    );
-    return response.data;
-  } catch (error) {
+    const response = await apiClient.post<UserProfileToken>("account/register", {
+      email,
+      username,
+      password,
+    });
+    return response;
+  }
+  catch (error) {
     HandleError(error);
   }
 };
@@ -28,8 +26,9 @@ export const loginAPI = async (username: string, password: string) => {
       username,
       password,
     });
-    return response.data;
-  } catch (error) {
+    return response;
+  }
+  catch (error) {
     HandleError(error);
   }
 };
