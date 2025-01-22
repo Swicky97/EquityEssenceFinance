@@ -1,41 +1,36 @@
-import axios from "axios";
-import { PortfolioGet, PortfolioPost } from "../Models/Portfolio";
+import apiClient from "../apiClient";
 import { HandleError } from "../Helpers/ErrorHandler";
-
-const api = "http://localhost:5167/api/portfolio/";
+import { PortfolioGet, PortfolioPost } from "../Models/Portfolio";
 
 export const portfolioAddAPI = async (symbol: string) => {
-    try 
-    {
-        const data = await axios.post<PortfolioPost>(api + `?symbol=${symbol}`);
-        return data;
-    }
-    catch (error) 
-    {
-        HandleError(error);
-    }
-}
+  try {
+    const response = await apiClient.post<PortfolioPost>(`portfolio`, null, {
+      params: { symbol },
+    });
+    return response.data;
+  } catch (error) {
+    HandleError(error);
+  }
+};
 
+// Get the portfolio list
 export const portfolioGetAPI = async () => {
-    try 
-    {
-        const data = await axios.get<PortfolioGet[]>(api);
-        return data;
-    }
-    catch (error) 
-    {
-        HandleError(error);
-    }
-}
+  try {
+    const response = await apiClient.get<PortfolioGet[]>(`portfolio`);
+    return response.data;
+  } catch (error) {
+    HandleError(error);
+  }
+};
 
+// Delete a portfolio item by symbol
 export const portfolioDeleteAPI = async (symbol: string) => {
-    try 
-    {
-        const data = await axios.delete<PortfolioPost>(api + `?symbol=${symbol}`);
-        return data;
-    }
-    catch (error) 
-    {
-        HandleError(error);
-    }
-}
+  try {
+    const response = await apiClient.delete<PortfolioPost>(`portfolio`, {
+      params: { symbol },
+    });
+    return response.data;
+  } catch (error) {
+    HandleError(error);
+  }
+};

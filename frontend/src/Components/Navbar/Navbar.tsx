@@ -9,11 +9,11 @@ interface Props {}
 const Navbar = (props: Props) => {
   const { isLoggedIn, user, logout } = useAuth();
   return (
-    <nav className="relative container mx-auto p-6">
+    <nav className="relative container mx-auto p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-20">
           <Link to="/">
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" className="w-64 mt-[-16px]"/>
           </Link>
           <div className="hidden font-bold lg:flex">
             <Link to="/search" className="text-black hover:text-darkBlue">
