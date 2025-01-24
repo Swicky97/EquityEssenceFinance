@@ -22,6 +22,7 @@ const ListPortfolio: React.FC<Props> = ({
             portfolioValues.map((portfolioValue) => {
               return (
                 <CardPortfolio
+                  key={portfolioValue.id}
                   portfolioValue={portfolioValue}
                   onPortfolioDelete={onPortfolioDelete}
                 />

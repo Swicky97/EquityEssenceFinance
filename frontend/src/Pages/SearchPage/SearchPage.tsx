@@ -27,6 +27,7 @@ const SearchPage = () => {
     .then((res) => {
       if (res?.data)
       {
+        console.log(res?.data);
         setPortfolioValues(res?.data);
       }
     }).catch((e) => {
@@ -36,9 +37,11 @@ const SearchPage = () => {
 
   const onPortfolioCreate = (e: any) => {
     e.preventDefault();
+    console.log(e.target[0].value)
     portfolioAddAPI(e.target[0].value)
     .then((res) => {
-      if (res?.status === 204) {
+      console.log(res?.status)
+      if (res?.status === 201) {
         toast.success("Stock added to portfolio");
         getPortfolio();
       }
