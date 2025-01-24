@@ -161,3 +161,12 @@ C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Newtonsof
 C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
 C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\chase.swick\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\chase\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\api.staticwebassets.endpoints.json
+C:\Users\chase\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\chase\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\chase\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\chase\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\chase\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\chase\Desktop\EquityEssenceFinance\api\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\chase\Desktop\EquityEssenceFinance\api\obj\Debug\net7.0\staticwebassets.build.endpoints.json
+C:\Users\chase\Desktop\EquityEssenceFinance\api\obj\Debug\net7.0\staticwebassets\msbuild.api.Microsoft.AspNetCore.StaticWebAssetEndpoints.props

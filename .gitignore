@@ -26,5 +26,3 @@ yarn-error.log*
 # Ignore appsettings files
 appsettings.json
 appsettings.*.json
-
-*.json
