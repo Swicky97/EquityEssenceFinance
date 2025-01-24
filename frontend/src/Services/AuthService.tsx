@@ -1,6 +1,8 @@
-import apiClient from "../apiClient";
+import axios from "axios";
 import { HandleError } from "../Helpers/ErrorHandler";
 import { UserProfileToken } from "../Models/User";
+
+const api = "http://localhost:5206/api/";
 
 export const registerAPI = async (
   email: string,
@@ -8,27 +10,27 @@ export const registerAPI = async (
   password: string
 ) => {
   try {
-    const response = await apiClient.post<UserProfileToken>("account/register", {
-      email,
-      username,
-      password,
+    const data = await axios.post<UserProfileToken>(api + "account/register", {
+      email: email,
+      username: username,
+      password: password,
     });
-    return response;
-  }
-  catch (error) {
+    return data;
+  } catch (error) {
     HandleError(error);
   }
 };
 
 export const loginAPI = async (username: string, password: string) => {
   try {
-    const response = await apiClient.post<UserProfileToken>("account/login", {
-      username,
-      password,
+    const data = await axios.post<UserProfileToken>(api + "account/login", {
+      username: username,
+      password: password,
     });
-    return response;
-  }
-  catch (error) {
+    return data;
+  } catch (error) {
     HandleError(error);
   }
 };
+
+

@@ -24,10 +24,24 @@ public class AccountController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDTO registerDto)
     {
-        try 
+        try
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            // Check if the email already exists
+            var existingUserByEmail = await _userManager.FindByEmailAsync(registerDto.Email);
+            if (existingUserByEmail != null)
+            {
+                return BadRequest("Email is already in use.");
+            }
+
+            // Check if the username already exists
+            var existingUserByUsername = await _userManager.FindByNameAsync(registerDto.Username);
+            if (existingUserByUsername != null)
+            {
+                return BadRequest("Username is already in use.");
+            }
 
             var appUser = new AppUser
             {
@@ -35,7 +49,7 @@ public class AccountController : ControllerBase
                 Email = registerDto.Email
             };
 
-            var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
+            var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password!);
 
             if (createdUser.Succeeded)
             {
@@ -51,7 +65,7 @@ public class AccountController : ControllerBase
                         }
                     );
                 }
-                else 
+                else
                 {
                     return StatusCode(500, roleResult.Errors);
                 }
@@ -60,7 +74,7 @@ public class AccountController : ControllerBase
             {
                 return StatusCode(500, createdUser.Errors);
             }
-        } 
+        }
         catch (Exception ex)
         {
             return StatusCode(500, ex);

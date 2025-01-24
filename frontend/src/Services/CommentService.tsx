@@ -1,18 +1,20 @@
-import apiClient from "../apiClient";
-import { HandleError } from "../Helpers/ErrorHandler";
+import axios from "axios";
 import { CommentGet, CommentPost } from "../Models/Comment";
+import { HandleError } from "../Helpers/ErrorHandler";
+
+const api = "http://localhost:5206/api/comment/";
 
 export const commentPostAPI = async (
   title: string,
   content: string,
-  symbol: string,
+  symbol: string
 ) => {
   try {
-    const response = await apiClient.post<CommentPost>(`comment/${symbol}`, {
-      title,
-      content,
+    const data = await axios.post<CommentPost>(api + `${symbol}`, {
+      title: title,
+      content: content,
     });
-    return response;
+    return data;
   } catch (error) {
     HandleError(error);
   }
@@ -20,8 +22,8 @@ export const commentPostAPI = async (
 
 export const commentGetAPI = async (symbol: string) => {
   try {
-    const response = await apiClient.get<CommentGet[]>(`comment/${symbol}`);
-    return response;
+    const data = await axios.get<CommentGet[]>(api + `?Symbol=${symbol}`);
+    return data;
   } catch (error) {
     HandleError(error);
   }
