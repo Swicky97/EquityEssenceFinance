@@ -73,19 +73,25 @@ const SearchPage = () => {
 
   return (
     <div className="App">
-      <Search
-        onSearchSubmit={onSearchSubmit}
-        search={search}
-        handleSearchChange={handleSearchChange}
-      />
-      <ListPortfolio
-        portfolioValues={portfolioValues!}
-        onPortfolioDelete={onPortfolioDelete}
-      />
-      <CardList
-        searchResults={searchResult}
-        onPortfolioCreate={onPortfolioCreate}
-      />
+      <div className="flex flex-wrap container mx-auto pt-4">
+        <div className="flex flex-col flex-2 gap-4 w-full md:w-2/3">
+          <Search
+            onSearchSubmit={onSearchSubmit}
+            search={search}
+            handleSearchChange={handleSearchChange}
+          />
+          <CardList
+            searchResults={searchResult}
+            onPortfolioCreate={onPortfolioCreate}
+          />
+        </div>
+        <div className="p-4 flex-1 gap-4 w-full md:w-1/3">
+          <ListPortfolio
+            portfolioValues={portfolioValues!}
+            onPortfolioDelete={onPortfolioDelete}
+          />
+        </div>
+      </div>
       {serverError && <h1>{serverError}</h1>}
     </div>
   );
