@@ -16,7 +16,7 @@ const ListPortfolio: React.FC<Props> = ({
       <h2 className="mb-3 mt-3 text-3xl font-semibold text-center md:text-4xl">
         My Portfolio
       </h2>
-      <div className="max-w-5xl mx-auto px-10 md:px-6 md:space-y-0 md:flex-row">
+      <div className="max-w-5xl mx-auto">
         <>
           {portfolioValues.length > 0 ? (
             portfolioValues.map((portfolioValue) => {
