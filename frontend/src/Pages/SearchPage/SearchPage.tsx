@@ -74,7 +74,7 @@ const SearchPage = () => {
   return (
     <div className="App">
       <div className="flex flex-wrap container mx-auto pt-4">
-        <div className="flex flex-col flex-2 gap-4 w-full md:w-2/3">
+        <div className="flex flex-col flex-2 w-full pr-4 md:w-2/3">
           <Search
             onSearchSubmit={onSearchSubmit}
             search={search}
@@ -85,7 +85,7 @@ const SearchPage = () => {
             onPortfolioCreate={onPortfolioCreate}
           />
         </div>
-        <div className="p-4 flex-1 gap-4 w-full md:w-1/3">
+        <div className="flex-1 w-full rounded-lg md:w-1/3">
           <ListPortfolio
             portfolioValues={portfolioValues!}
             onPortfolioDelete={onPortfolioDelete}
