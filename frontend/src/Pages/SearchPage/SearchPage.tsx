@@ -76,7 +76,7 @@ const SearchPage = () => {
   return (
     <div className="App">
       <div className="flex flex-wrap justify-between mx-auto pt-4">
-        <div className="flex flex-col mx-8 w-full lg:w-4/6">
+        <div className="flex flex-col flex-1 px-4 w-full">
           <Search
             onSearchSubmit={onSearchSubmit}
             search={search}
@@ -88,7 +88,7 @@ const SearchPage = () => {
             hasSearched={hasSearched}
           />
         </div>
-        <div className="mx-8 w-full rounded-lg lg:w-1/6">
+        <div className="mx-4 w-full rounded-lg md:w-[300px]">
           <ListPortfolio
             portfolioValues={portfolioValues!}
             onPortfolioDelete={onPortfolioDelete}

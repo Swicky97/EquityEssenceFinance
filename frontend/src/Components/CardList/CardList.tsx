@@ -15,7 +15,7 @@ const CardList: React.FC<Props> = ({
   hasSearched,
 }: Props): JSX.Element => {
   return (
-    <div>
+    <div className="container mx-auto">
       {searchResults.length > 0 ? (
         searchResults.map((result, index) => (
           <Card
