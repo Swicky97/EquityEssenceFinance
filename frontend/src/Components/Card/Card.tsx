@@ -8,16 +8,18 @@ interface Props {
   id: string;
   searchResult: CompanySearch;
   onPortfolioCreate: (e: SyntheticEvent) => void;
+  bgColor: string;
 }
 
 const Card: React.FC<Props> = ({
   id,
   searchResult,
   onPortfolioCreate,
+  bgColor
 }: Props): JSX.Element => {
   return (
     <div
-      className="flex flex-col items-center justify-between w-full p-6 bg-slate-100 rounded-lg md:flex-row"
+      className={`flex flex-col items-center justify-between w-full p-6 rounded-lg md:flex-row ${bgColor}`}
       key={id}
       id={id}
     >

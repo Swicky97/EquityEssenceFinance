@@ -13,6 +13,7 @@ const SearchPage = () => {
   const [portfolioValues, setPortfolioValues] = useState<PortfolioGet[] | null>([]);
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
   const [serverError, setServerError] = useState<string>("");
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -67,14 +68,15 @@ const SearchPage = () => {
     if (typeof result === "string") {
       setServerError(result);
     } else if (Array.isArray(result.data)) {
+      setHasSearched(true);
       setSearchResult(result.data);
     }
   };
 
   return (
     <div className="App">
-      <div className="flex flex-wrap container mx-auto pt-4">
-        <div className="flex flex-col flex-2 w-full pr-4 md:w-2/3">
+      <div className="flex flex-wrap justify-between mx-auto pt-4">
+        <div className="flex flex-col mx-8 w-full lg:w-4/6">
           <Search
             onSearchSubmit={onSearchSubmit}
             search={search}
@@ -83,9 +85,10 @@ const SearchPage = () => {
           <CardList
             searchResults={searchResult}
             onPortfolioCreate={onPortfolioCreate}
+            hasSearched={hasSearched}
           />
         </div>
-        <div className="flex-1 w-full rounded-lg md:w-1/3">
+        <div className="mx-8 w-full rounded-lg lg:w-1/6">
           <ListPortfolio
             portfolioValues={portfolioValues!}
             onPortfolioDelete={onPortfolioDelete}
