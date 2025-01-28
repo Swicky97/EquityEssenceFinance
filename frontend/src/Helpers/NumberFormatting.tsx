@@ -35,3 +35,22 @@ export const formatLargeNonMonetaryNumber: any = (number: number) => {
 export const formatRatio = (ratio: number) => {
   return (Math.round(ratio * 100) / 100).toFixed(2);
 };
+
+export const formatDatetime = (date: string | Date) => {
+  if (typeof date === 'string') {
+    date = new Date(date.replace(/\.\d{4,}/, (match) => match.substring(0, 4)));
+  }
+
+  const options: Intl.DateTimeFormatOptions = {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  };
+  return new Intl.DateTimeFormat('en-US', options).format(date as Date);
+};
+
+
+

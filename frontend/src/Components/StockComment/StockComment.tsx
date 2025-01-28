@@ -46,8 +46,8 @@ const StockComment = ({ stockSymbol }: Props) => {
   };
   return (
     <div className="flex flex-col">
-      {loading ? <Spinner /> : <StockCommentList comments={comments!} />}
       <StockCommentForm symbol={stockSymbol} handleComment={handleComment} />
+      {loading ? <Spinner /> : <StockCommentList comments={comments!} />}
     </div>
   );
 };
