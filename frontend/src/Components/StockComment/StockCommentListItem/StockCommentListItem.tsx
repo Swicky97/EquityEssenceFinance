@@ -12,11 +12,11 @@ const StockCommentListItem = ({ comment }: Props) => {
       <div className="relative flex gap-4">
         <div className="flex flex-col w-full">
           <div className="flex flex-row justify-between">
-            <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">
-              <div>
+            <p className="flex relative text-xl whitespace-nowrap truncate overflow-hidden items-center">
+              <div className="mr-4">
                 {comment.title}
               </div>
-              <div>
+              <div className="text-sm text-gray-500">
                 {formatDatetime(comment.createdOn)}
               </div>
             </p>
