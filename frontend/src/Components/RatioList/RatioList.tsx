@@ -12,7 +12,7 @@ const RatioList = ({ config, data }: Props) => {
             <p className="text-sm font-medium text-gray-900 truncate">
               {row.label}
             </p>
-            <p className="text-sm text-gray-500 truncate">
+            <p className="text-sm text-gray-500">
               <a
                 href="/cdn-cgi/l/email-protection"
                 className="__cf_email__"
