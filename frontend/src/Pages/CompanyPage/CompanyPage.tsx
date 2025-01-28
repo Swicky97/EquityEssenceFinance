@@ -36,7 +36,7 @@ const CompanyPage = (props: Props) => {
             <p className="bg-white shadow rounded text-medium font-medium text-gray-900 p-3 mt-1 m-4">
               {company.description}
             </p>
-            <div>
+            <div className="md:hidden">
               <MobileSidebar />
             </div>
           </CompanyDashboard>
