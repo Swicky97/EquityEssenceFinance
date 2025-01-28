@@ -6,6 +6,7 @@ import Sidebar from "../../Components/Sidebar/Sidebar";
 import CompanyDashboard from "../../Components/CompanyDashboard/CompanyDashboard";
 import Tile from "../../Components/Tile/Tile";
 import Spinner from "../../Components/Spinner/Spinner";
+import MobileSidebar from "../../Components/Sidebar/MobileSidebar/MobileSidebar";
 
 interface Props {}
 
@@ -35,6 +36,9 @@ const CompanyPage = (props: Props) => {
             <p className="bg-white shadow rounded text-medium font-medium text-gray-900 p-3 mt-1 m-4">
               {company.description}
             </p>
+            <div>
+              <MobileSidebar />
+            </div>
           </CompanyDashboard>
         </div>
       ) : (
