@@ -13,27 +13,29 @@ const ListPortfolio: React.FC<Props> = ({
 }: Props) => {
   return (
     <section id="portfolio">
-      <h2 className="mb-3 mt-3 text-3xl font-semibold text-center md:text-4xl">
-        My Portfolio
-      </h2>
-      <div className="max-w-5xl mx-auto">
-        <>
-          {portfolioValues.length > 0 ? (
-            portfolioValues.map((portfolioValue) => {
-              return (
-                <CardPortfolio
-                  key={portfolioValue.id}
-                  portfolioValue={portfolioValue}
-                  onPortfolioDelete={onPortfolioDelete}
-                />
-              );
-            })
-          ) : (
-            <h3 className="mb-3 mt-3 text-xl font-semibold text-center md:text-xl">
-              Your portfolio is empty.
-            </h3>
-          )}
-        </>
+      <div className="border-2 border-gray-200">
+        <h2 className="py-2 text-1xl font-semibold text-left border-b-2 pl-2 md:text-2xl">
+          Stock Watchlist
+        </h2>
+        <div className="max-w-5xl mx-auto">
+          <>
+            {portfolioValues.length > 0 ? (
+              portfolioValues.map((portfolioValue) => {
+                return (
+                  <CardPortfolio
+                    key={portfolioValue.id}
+                    portfolioValue={portfolioValue}
+                    onPortfolioDelete={onPortfolioDelete}
+                  />
+                );
+              })
+            ) : (
+              <h3 className="mb-3 mt-3 text-xl font-semibold text-center md:text-xl">
+                Your portfolio is empty.
+              </h3>
+            )}
+          </>
+        </div>
       </div>
     </section>
   );

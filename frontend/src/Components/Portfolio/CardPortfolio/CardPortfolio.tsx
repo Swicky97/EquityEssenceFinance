@@ -2,7 +2,6 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import DeletePortfolio from "../DeletePortfolio/DeletePortfolio";
 import { Link } from "react-router-dom";
 import { PortfolioGet } from "../../../Models/Portfolio";
-import { CompanyProfile } from "../../../company";
 import { getCompanyProfile } from "../../../api";
 
 interface Props {
@@ -26,14 +25,14 @@ const CardPortfolio = ({ portfolioValue, onPortfolioDelete }: Props) => {
   }, []);
 
   return (
-    <div className="flex justify-between p-4 my-4 rounded-lg shadow-lg bg-slate-100">
+    <div className="flex justify-between items-center border-b-2">
       <Link
         to={`/company/${portfolioValue.symbol}/company-profile`}
-        className="h-[48px] w-[96px] border-2 rounded-lg bg-lightGreen hover:bg-white border-lightGreen flex items-center justify-center"
+        className="flex-grow hover:bg-gray-100 cursor-pointer flex justify-between p-3 border-r-2"
       >
-        <span className="text-xl font-bold">{portfolioValue.symbol}</span>
+        <span className="text-xl font-bold flex items-center">{portfolioValue.symbol}</span>
+        <div className="text-xl font-bold flex items-center">${price?.toFixed(2)}</div>
       </Link>
-      <div className="text-xl font-bold flex items-center">{price}</div>
       <DeletePortfolio
         portfolioValue={portfolioValue.symbol}
         onPortfolioDelete={onPortfolioDelete}
