@@ -88,10 +88,12 @@ const BalanceSheet = (props: Props) => {
   }, []);
   return (
     <>
-      {companyData ? (
+      {companyData && companyData !== undefined ? (
         <RatioList config={config} data={companyData} />
       ) : (
-        <Spinner />
+        <p className="text-center w-full text-gray-500 text-lg font-medium mt-4">
+          No data available
+        </p>
       )}
     </>
   );

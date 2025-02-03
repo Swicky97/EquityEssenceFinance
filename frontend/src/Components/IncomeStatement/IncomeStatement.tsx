@@ -90,10 +90,12 @@ const IncomeStatement = (props: Props) => {
   }, []);
   return (
     <>
-      {incomeStatement ? (
+      {incomeStatement && incomeStatement.length > 0 ? (
         <Table config={configs} data={incomeStatement} />
       ) : (
-        <Spinner />
+        <p className="text-center w-full text-gray-500 text-lg font-medium mt-4">
+          No data available
+        </p>
       )}
     </>
   );

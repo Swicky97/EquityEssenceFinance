@@ -51,10 +51,10 @@ const Navbar = (props: Props) => {
 
         {isLoggedIn() ? (
           <div className="hidden lg:flex items-center space-x-6 text-back">
-            <div className="hover:text-darkBlue">Welcome, {user?.userName}</div>
+            <div>Welcome, {user?.userName}</div>
             <a
               onClick={logout}
-              className="px-8 py-3 font-bold rounded text-white bg-lightGreen hover:opacity-70"
+              className="px-8 py-3 font-bold rounded text-white bg-lightGreen cursor-pointer hover:opacity-70"
             >
               Logout
             </a>
@@ -74,7 +74,6 @@ const Navbar = (props: Props) => {
         )}
       </div>
 
-      {/* Animated Mobile Menu */}
       {isMenuOpen && (
         <motion.div
           initial="hidden"
@@ -117,7 +116,7 @@ const Navbar = (props: Props) => {
                   logout();
                   setIsMenuOpen(false);
                 }}
-                className="block px-4 py-2 font-bold rounded hover:bg-lightGreen"
+                className="block px-4 py-2 font-bold rounded cursor-pointer hover:bg-lightGreen"
               >
                 Logout
               </a>

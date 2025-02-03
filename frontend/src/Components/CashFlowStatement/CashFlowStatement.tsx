@@ -62,11 +62,15 @@ const CashflowStatement = (props: Props) => {
     };
     fetchCashflow();
   }, []);
-  return cashFlowData ? (
-    <Table config={config} data={cashFlowData}></Table>
+  return cashFlowData && cashFlowData.length > 0 ? (
+    <Table config={config} data={cashFlowData} />
   ) : (
-    <Spinner />
+    <p className="text-center w-full text-gray-500 text-lg font-medium mt-4">
+      No data available
+    </p>
   );
+  
+   
 };
 
 export default CashflowStatement;
