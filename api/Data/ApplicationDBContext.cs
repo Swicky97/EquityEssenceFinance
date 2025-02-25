@@ -37,11 +37,13 @@ public class ApplicationDBContext : IdentityDbContext<AppUser>
         {
             new IdentityRole
             {
+                Id = "8f5b2c62-3d84-4a2e-a833-3344f8a9d9c1",
                 Name = "Admin",
                 NormalizedName = "ADMIN"
             },
             new IdentityRole
             {
+                Id = "4d2a6b9c-8a8f-4c39-91b4-dbbf8b987c2a",
                 Name = "User",
                 NormalizedName = "USER"
             },
