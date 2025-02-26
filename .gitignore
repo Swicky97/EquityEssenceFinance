@@ -1,5 +1,23 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Build output directories
+bin/
+obj/
+
+# Debug and Release folders
+**/bin/
+**/obj/
+
+# User-specific Visual Studio settings
+.vscode/
+*.user
+*.suo
+*.vsp
+*.csproj.user
+*.dbmdl
+*.opendb
+
+
 # dependencies
 node_modules
 .pnp
