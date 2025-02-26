@@ -17,7 +17,6 @@ obj/
 *.dbmdl
 *.opendb
 
-
 # dependencies
 node_modules
 .pnp
