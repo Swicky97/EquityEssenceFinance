@@ -111,7 +111,7 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()
-    //.WithOrigins("https://localhost:44351))
+    .WithOrigins("https://equityessence-bpawgvedcffvfqff.centralus-01.azurewebsites.net")
     .SetIsOriginAllowed(origin => true));
 
 app.UseAuthentication();
