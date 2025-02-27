@@ -2,7 +2,7 @@ import axios from "axios";
 import { HandleError } from "../Helpers/ErrorHandler";
 import { UserProfileToken } from "../Models/User";
 
-const api = "https://equityessence-bpawgvedcffvfqff.centralus-01.azurewebsites.net/api/";
+const api = "/api/";
 
 export const registerAPI = async (
   email: string,
