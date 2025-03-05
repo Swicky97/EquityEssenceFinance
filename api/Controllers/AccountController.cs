@@ -56,12 +56,14 @@ public class AccountController : ControllerBase
                 var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
                 if (roleResult.Succeeded)
                 {
+                    var token = _tokenService.CreateToken(appUser);
+                    AppendTokenToHttpOnlyCookie(token);
+
                     return Ok(
                         new NewUserDTO
                         {
                             UserName = appUser.UserName,
                             Email = appUser.Email,
-                            Token = _tokenService.CreateToken(appUser)
                         }
                     );
                 }
@@ -95,13 +97,28 @@ public class AccountController : ControllerBase
 
         if (!result.Succeeded) return Unauthorized("Username not found or password incorrect");
 
+        var token = _tokenService.CreateToken(user);
+        AppendTokenToHttpOnlyCookie(token);
+
         return Ok(
             new NewUserDTO
             {
                 UserName = user.UserName,
                 Email = user.Email,
-                Token = _tokenService.CreateToken(user)
             }
         );
+    }
+
+    public void AppendTokenToHttpOnlyCookie(string token)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddDays(7)
+        };
+
+        Response.Cookies.Append("authToken", token, cookieOptions);
     }
 }
