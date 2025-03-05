@@ -11,12 +11,15 @@ public class TokenService : ITokenService
 {
     private readonly IConfiguration _config;
     private readonly SymmetricSecurityKey _key;
-    public TokenService(IConfiguration config)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public TokenService(IConfiguration config, IHttpContextAccessor httpContextAccessor)
     {
         _config = config;
         _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]));
+        _httpContextAccessor = httpContextAccessor;
     }
-    public string CreateToken(AppUser user)
+
+    public void CreateToken(AppUser user)
     {
         var claims = new List<Claim>
         {
@@ -36,7 +39,61 @@ public class TokenService : ITokenService
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
+        var tokenString = tokenHandler.WriteToken(token);
 
-        return tokenHandler.WriteToken(token);
+        SetAuthTokenCookie(tokenString);
     }
+
+    public void SetAuthTokenCookie(string token)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true, 
+            Secure = true, 
+            SameSite = SameSiteMode.Strict, 
+            Expires = DateTime.UtcNow.AddDays(7)
+        };
+
+        _httpContextAccessor.HttpContext?.Response.Cookies.Append("AuthToken", token, cookieOptions);
+    }
+
+    public void RemoveAuthTokenCookie()
+    {
+        _httpContextAccessor.HttpContext?.Response.Cookies.Delete("AuthToken");
+    }
+
+    public bool IsValidAuthToken(out ClaimsPrincipal claimsPrincipal)
+    {
+        claimsPrincipal = new ClaimsPrincipal();
+
+        var token = _httpContextAccessor.HttpContext?.Request.Cookies["AuthToken"];
+        if (string.IsNullOrEmpty(token))
+        {
+            return false;
+        }
+
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = _config["JWT:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = _config["JWT:Audience"],
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"])),
+                ValidateLifetime = true, 
+                ClockSkew = TimeSpan.Zero
+            };
+
+            claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
 }

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using api.Dtos.Account;
 using api.Interfaces;
 using api.Models;
@@ -56,8 +57,7 @@ public class AccountController : ControllerBase
                 var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
                 if (roleResult.Succeeded)
                 {
-                    var token = _tokenService.CreateToken(appUser);
-                    AppendTokenToHttpOnlyCookie(token);
+                    _tokenService.CreateToken(appUser);
 
                     return Ok(
                         new NewUserDTO
@@ -97,8 +97,7 @@ public class AccountController : ControllerBase
 
         if (!result.Succeeded) return Unauthorized("Username not found or password incorrect");
 
-        var token = _tokenService.CreateToken(user);
-        AppendTokenToHttpOnlyCookie(token);
+        _tokenService.CreateToken(user);
 
         return Ok(
             new NewUserDTO
@@ -116,16 +115,24 @@ public class AccountController : ControllerBase
         return Ok(new { message = "Logged out successfully" });
     }
 
-    public void AppendTokenToHttpOnlyCookie(string token)
+    [HttpGet("refresh")]
+    public IActionResult RefreshAuth()
     {
-        var cookieOptions = new CookieOptions
+        if (_tokenService.IsValidAuthToken(out var claimsPrincipal))
         {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.Strict,
-            Expires = DateTime.UtcNow.AddDays(7)
-        };
+            var userId = claimsPrincipal?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var email = claimsPrincipal?.FindFirst(ClaimTypes.Email)?.Value;
+            var username = claimsPrincipal?.FindFirst(ClaimTypes.GivenName)?.Value;
 
-        Response.Cookies.Append("authToken", token, cookieOptions);
+            return Ok(new
+            {
+                message = "User authenticated",
+                userId,
+                email,
+                username
+            });
+        }
+
+        return Unauthorized(new { message = "Invalid or expired token" });
     }
 }

@@ -42,3 +42,12 @@ export const logoutAPI = async () => {
   }
 }
 
+export const refreshAPI = async () => {
+  try {
+    await axios.post(api + "account/refresh");
+  }
+  catch (error) {
+    HandleError(error);
+  }
+}
+
