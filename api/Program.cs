@@ -99,8 +99,10 @@ builder.Services.AddHttpClient<IFMPService, FMPService>();
 var app = builder.Build();
 
 // Serve React static files
-app.UseDefaultFiles();
 app.UseStaticFiles();
+
+app.UseRouting();
+app.MapFallbackToFile("/index.html");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
