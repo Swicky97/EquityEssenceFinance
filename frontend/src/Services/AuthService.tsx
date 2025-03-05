@@ -33,4 +33,12 @@ export const loginAPI = async (username: string, password: string) => {
   }
 };
 
+export const logoutAPI = async () => {
+  try {
+    await axios.post(api + "account/logout");
+  }
+  catch (error) {
+    HandleError(error);
+  }
+}
 

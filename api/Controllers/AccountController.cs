@@ -109,6 +109,13 @@ public class AccountController : ControllerBase
         );
     }
 
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("authToken");
+        return Ok(new { message = "Logged out successfully" });
+    }
+
     public void AppendTokenToHttpOnlyCookie(string token)
     {
         var cookieOptions = new CookieOptions
