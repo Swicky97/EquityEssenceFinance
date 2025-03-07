@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.png";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
@@ -10,6 +10,16 @@ interface Props {}
 const Navbar = (props: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isLoggedIn, user, logout } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+      const checkAuth = async () => {
+        const authStatus = await isLoggedIn();
+        setIsAuthenticated(authStatus);
+      };
+  
+      checkAuth();
+    }, [isLoggedIn]);
 
   const menuVariants = {
     hidden: { x: "100%" },
@@ -49,7 +59,7 @@ const Navbar = (props: Props) => {
           </button>
         </div>
 
-        {isLoggedIn() ? (
+        {isAuthenticated ? (
           <div className="hidden lg:flex items-center space-x-6 text-back">
             <div>Welcome, {user?.userName}</div>
             <a
@@ -102,7 +112,7 @@ const Navbar = (props: Props) => {
               />
             </svg>
           </button>
-          {isLoggedIn() ? (
+          {isAuthenticated ? (
             <>
               <Link
                 to="/search"
