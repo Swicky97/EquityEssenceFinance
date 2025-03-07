@@ -1,35 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "./logo.png";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../Context/useAuth";
 import { motion } from "framer-motion";
+import { useAuth0 } from "@auth0/auth0-react";
 
-interface Props {}
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoggedIn, user, logout } = useAuth();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const authStatus = await isLoggedIn();
-      setIsAuthenticated(authStatus);
-    };
-
-    checkAuth();
-  }, [isLoggedIn, user]);
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
   const menuVariants = {
     hidden: { x: "100%" },
     visible: { x: 0 },
     exit: { x: "100%" },
-  };
-
-  const handleLogout = async () => {
-    await logout();
-    setIsAuthenticated(false);
   };
 
   return (
@@ -66,25 +49,30 @@ const Navbar = (props: Props) => {
 
         {isAuthenticated ? (
           <div className="hidden lg:flex items-center space-x-6 text-back">
-            <div>Welcome, {user?.userName}</div>
-            <a
-              onClick={handleLogout}
+            <div>Welcome, {user?.name}</div>
+            <button
+              onClick={() =>
+                logout({ logoutParams: { returnTo: window.location.origin } })
+              }
               className="px-8 py-3 font-bold rounded text-white bg-lightGreen cursor-pointer hover:opacity-70"
             >
               Logout
-            </a>
+            </button>
           </div>
         ) : (
           <div className="hidden lg:flex items-center space-x-6 text-back">
-            <Link to="/login" className="hover:text-darkBlue">
+            <button
+              onClick={() => loginWithRedirect()}
+              className="hover:text-darkBlue"
+            >
               Login
-            </Link>
-            <Link
-              to="/register"
+            </button>
+            <button
+              onClick={() => loginWithRedirect()}
               className="px-8 py-3 font-bold rounded text-white bg-lightGreen hover:opacity-70"
             >
               Signup
-            </Link>
+            </button>
           </div>
         )}
       </div>
@@ -126,29 +114,30 @@ const Navbar = (props: Props) => {
               >
                 Search
               </Link>
-              <a
-                onClick={handleLogout}
+              <button
+                onClick={() => {
+                  logout({ logoutParams: { returnTo: window.location.origin } });
+                  setIsMenuOpen(false);
+                }}
                 className="block px-4 py-2 font-bold rounded cursor-pointer hover:bg-lightGreen"
               >
                 Logout
-              </a>
+              </button>
             </>
           ) : (
             <>
-              <Link
-                to="/login"
+              <button
+                onClick={() => loginWithRedirect()}
                 className="block px-4 py-2 font-bold rounded hover:bg-lightGreen"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Login
-              </Link>
-              <Link
-                to="/register"
+              </button>
+              <button
+                onClick={() => loginWithRedirect()}
                 className="block px-4 py-2 font-bold rounded hover:bg-lightGreen"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Signup
-              </Link>
+              </button>
             </>
           )}
         </motion.div>
