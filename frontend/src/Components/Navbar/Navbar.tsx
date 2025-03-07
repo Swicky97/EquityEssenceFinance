@@ -27,6 +27,11 @@ const Navbar = (props: Props) => {
     exit: { x: "100%" },
   };
 
+  const handleLogout = async () => {
+    await logout();
+    setIsAuthenticated(false);
+  };
+
   return (
     <nav className="relative mx-auto px-8 py-4 bg-gray-100">
       <div className="flex items-center justify-between">
@@ -63,10 +68,7 @@ const Navbar = (props: Props) => {
           <div className="hidden lg:flex items-center space-x-6 text-back">
             <div>Welcome, {user?.userName}</div>
             <a
-              onClick={async () => {
-                await logout();
-                setIsAuthenticated(false);
-              }}
+              onClick={handleLogout}
               className="px-8 py-3 font-bold rounded text-white bg-lightGreen cursor-pointer hover:opacity-70"
             >
               Logout
@@ -125,11 +127,7 @@ const Navbar = (props: Props) => {
                 Search
               </Link>
               <a
-                onClick={async () => {
-                  await logout();
-                  setIsAuthenticated(false);
-                  setIsMenuOpen(false);
-                }}
+                onClick={handleLogout}
                 className="block px-4 py-2 font-bold rounded cursor-pointer hover:bg-lightGreen"
               >
                 Logout
