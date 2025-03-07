@@ -1,26 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/useAuth";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const { isLoggedIn } = useAuth();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const authStatus = await isLoggedIn();
-      setIsAuthenticated(authStatus);
-    };
+  }, [isLoggedIn]); 
 
-    checkAuth();
-  }, [isLoggedIn]);
+  if (!isLoggedIn()) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-  return isAuthenticated ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
-  );
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
