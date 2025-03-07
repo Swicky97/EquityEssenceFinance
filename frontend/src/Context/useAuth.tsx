@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { UserProfile } from "../Models/User";
 import { useNavigate } from "react-router-dom";
-import { loginAPI, logoutAPI, registerAPI } from "../Services/AuthService";
+import { loginAPI, logoutAPI, refreshAPI, registerAPI } from "../Services/AuthService";
 import { toast } from "react-toastify";
 import React from "react";
 import axios from "axios";
@@ -11,7 +11,7 @@ type UserContextType = {
   registerUser: (email: string, username: string, password: string) => void;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
-  isLoggedIn: () => boolean;
+  isLoggedIn: () => void;
 };
 
 type Props = { children: React.ReactNode };
@@ -61,8 +61,16 @@ export const UserProvider = ({ children }: Props) => {
     }
   };
 
-  const isLoggedIn = () => {
-    return !!user;
+  const isLoggedIn = async () => {
+    try {
+      const res = await refreshAPI();
+      if (!res) {
+        setUser(null);
+        navigate("/");
+      }
+    } catch (error) {
+
+    }
   };
 
   const logout = async () => {
