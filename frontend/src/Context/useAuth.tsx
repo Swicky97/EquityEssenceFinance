@@ -11,7 +11,7 @@ type UserContextType = {
   registerUser: (email: string, username: string, password: string) => void;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
-  isLoggedIn: () => void;
+  isLoggedIn: () => Promise<boolean>;
 };
 
 type Props = { children: React.ReactNode };
@@ -64,12 +64,9 @@ export const UserProvider = ({ children }: Props) => {
   const isLoggedIn = async () => {
     try {
       const res = await refreshAPI();
-      if (!res) {
-        setUser(null);
-        navigate("/");
-      }
+      return !!res;
     } catch (error) {
-
+      return false;
     }
   };
 

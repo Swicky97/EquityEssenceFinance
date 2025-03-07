@@ -95,5 +95,4 @@ public class TokenService : ITokenService
             return false;
         }
     }
-
 }
