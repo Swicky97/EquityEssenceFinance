@@ -10,16 +10,16 @@ interface Props {}
 const Navbar = (props: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isLoggedIn, user, logout } = useAuth();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-      const checkAuth = async () => {
-        const authStatus = await isLoggedIn();
-        setIsAuthenticated(authStatus);
-      };
-  
-      checkAuth();
-    }, [isLoggedIn]);
+    const checkAuth = async () => {
+      const authStatus = await isLoggedIn();
+      setIsAuthenticated(authStatus);
+    };
+
+    checkAuth();
+  }, [isLoggedIn, user]);
 
   const menuVariants = {
     hidden: { x: "100%" },
@@ -63,7 +63,10 @@ const Navbar = (props: Props) => {
           <div className="hidden lg:flex items-center space-x-6 text-back">
             <div>Welcome, {user?.userName}</div>
             <a
-              onClick={logout}
+              onClick={async () => {
+                await logout();
+                setIsAuthenticated(false);
+              }}
               className="px-8 py-3 font-bold rounded text-white bg-lightGreen cursor-pointer hover:opacity-70"
             >
               Logout
@@ -122,8 +125,9 @@ const Navbar = (props: Props) => {
                 Search
               </Link>
               <a
-                onClick={() => {
-                  logout();
+                onClick={async () => {
+                  await logout();
+                  setIsAuthenticated(false);
                   setIsMenuOpen(false);
                 }}
                 className="block px-4 py-2 font-bold rounded cursor-pointer hover:bg-lightGreen"
