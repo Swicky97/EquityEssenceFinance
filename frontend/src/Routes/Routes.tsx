@@ -8,7 +8,6 @@ import SearchPage from "../Pages/SearchPage/SearchPage";
 import DesignPage from "../Pages/DesignPage/DesignPage";
 import BalanceSheet from "../Components/BalanceSheet/BalanceSheet";
 import LoginPage from "../Pages/LoginPage/LoginPage";
-import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import ProtectedRoute from "./ProtectedRoute";
 import CashflowStatement from "../Components/CashFlowStatement/CashFlowStatement";
 import Discussion from "../Components/Discussion/Discussion";
@@ -20,7 +19,6 @@ export const router = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
       { path: "search", element: <ProtectedRoute><SearchPage /></ProtectedRoute> },
       { path: "design-guide", element: <DesignPage /> },
       {
