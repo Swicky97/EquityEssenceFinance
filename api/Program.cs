@@ -63,6 +63,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     options.Authority = auth0Settings["Domain"];
     options.Audience = auth0Settings["Audience"];
+    options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
 });
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
