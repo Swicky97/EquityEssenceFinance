@@ -17,7 +17,6 @@ builder.Configuration
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(option =>
 {
@@ -63,7 +62,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     options.Authority = auth0Settings["Domain"];
     options.Audience = auth0Settings["Audience"];
-    options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
 });
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
@@ -74,10 +72,12 @@ builder.Services.AddHttpClient<IFMPService, FMPService>();
 
 var app = builder.Build();
 
+app.UseRouting();
+
 // Serve React static files
 app.UseStaticFiles();
 
-app.UseRouting();
+app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
 // Configure the HTTP request pipeline.
@@ -93,8 +93,7 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()
-    .WithOrigins("https://equityessence-bpawgvedcffvfqff.centralus-01.azurewebsites.net")
-    .SetIsOriginAllowed(origin => true));
+    .WithOrigins("https://equityessence-bpawgvedcffvfqff.centralus-01.azurewebsites.net"));
 
 app.UseAuthentication();
 
