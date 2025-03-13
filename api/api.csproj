@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrontendBuildFiles Include="..\frontend\build\**\*" />
+  </ItemGroup>
+
+  <Target Name="CopyFrontendBuildFiles" AfterTargets="Build">
+      <RemoveDir Directories="$(MSBuildProjectDirectory)\wwwroot\*" Condition="!Exists('$(MSBuildProjectDirectory)\wwwroot\web.config')"/>
+      <Copy SourceFiles="@(FrontendBuildFiles)" DestinationFolder="$(MSBuildProjectDirectory)\wwwroot\" />
+      <Copy SourceFiles="..\frontend\build\web.config" DestinationFolder="$(MSBuildProjectDirectory)\wwwroot\" SkipUnchangedFiles="true" Condition="Exists('..\frontend\build\web.config')" />
+  </Target>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.1" />
