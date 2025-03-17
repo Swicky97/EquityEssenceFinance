@@ -15,6 +15,16 @@ builder.Configuration
 
 // Add services to the container.
 
+foreach (var envVar in Environment.GetEnvironmentVariables().Keys)
+{
+    Console.WriteLine($"{envVar}: {Environment.GetEnvironmentVariable(envVar.ToString())}");
+}
+
+// Add Logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -58,9 +68,6 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 
 var auth0Settings = builder.Configuration.GetSection("Auth0");
 
-Console.WriteLine($"Auth0 Domain: {auth0Settings["Domain"]}");
-Console.WriteLine($"Auth0 Audience: {auth0Settings["Audience"]}");
-
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -79,10 +86,16 @@ builder.Services.AddHttpClient<IFMPService, FMPService>();
 var app = builder.Build();
 
 app.UseRouting();
-
-// Serve React static files
 app.UseStaticFiles();
+app.UseHttpsRedirection();
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    .WithOrigins("https://equityessence-bpawgvedcffvfqff.centralus-01.azurewebsites.net"));
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
@@ -92,19 +105,5 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .AllowCredentials()
-    .WithOrigins("https://equityessence-bpawgvedcffvfqff.centralus-01.azurewebsites.net"));
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();
