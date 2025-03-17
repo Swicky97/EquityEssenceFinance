@@ -58,11 +58,14 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 
 var auth0Settings = builder.Configuration.GetSection("Auth0");
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.Authority = auth0Settings["Domain"];
-    options.Audience = auth0Settings["Audience"];
-});
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = auth0Settings["Domain"];
+        options.Audience = auth0Settings["Audience"];
+        options.RequireHttpsMetadata = true;
+    });
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
