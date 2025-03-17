@@ -58,6 +58,9 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 
 var auth0Settings = builder.Configuration.GetSection("Auth0");
 
+Console.WriteLine($"Auth0 Domain: {auth0Settings["Domain"]}");
+Console.WriteLine($"Auth0 Audience: {auth0Settings["Audience"]}");
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
