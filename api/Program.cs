@@ -15,15 +15,15 @@ builder.Configuration
 
 // Add services to the container.
 
-foreach (var envVar in Environment.GetEnvironmentVariables().Keys)
-{
-    Console.WriteLine($"{envVar}: {Environment.GetEnvironmentVariable(envVar.ToString())}");
-}
-
 // Add Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
+
+foreach (var envVar in Environment.GetEnvironmentVariables().Keys)
+{
+    Console.WriteLine($"{envVar}: {Environment.GetEnvironmentVariable(envVar.ToString())}");
+}
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
