@@ -20,14 +20,12 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
-var logger = builder.Logging.Services.BuildServiceProvider().GetRequiredService<ILogger<Program>>();
-logger.LogInformation("Application starting...");
+// Read Auth0 settings from environment variables with REACT_APP_ prefix
+string? auth0Domain = Environment.GetEnvironmentVariable("REACT_APP_AUTH0_DOMAIN");
+string? auth0Audience = Environment.GetEnvironmentVariable("REACT_APP_AUTH0_AUDIENCE");
 
-// Add Environment Variable Debugging
-foreach (var envVar in Environment.GetEnvironmentVariables().Keys)
-{
-    logger.LogInformation($"{envVar}: {Environment.GetEnvironmentVariable(envVar.ToString())}");
-}
+Console.WriteLine($"Auth0 Domain: {auth0Domain}");
+Console.WriteLine($"Auth0 Audience: {auth0Audience}");
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -76,8 +74,8 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = auth0Settings["Domain"];
-        options.Audience = auth0Settings["Audience"];
+        options.Authority = auth0Domain;
+        options.Audience = auth0Audience;
         options.RequireHttpsMetadata = true;
     });
 

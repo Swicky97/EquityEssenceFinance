@@ -6,8 +6,8 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Routes/Routes";
 import { Auth0Provider } from "@auth0/auth0-react";
 
-const domain = process.env.Auth0__Domain as string;
-const clientId = process.env.Auth0__Client_Id as string;
+const domain = process.env.REACT_APP_AUTH0_DOMAIN as string;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID as string;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
