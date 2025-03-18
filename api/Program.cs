@@ -20,9 +20,13 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
+var logger = builder.Logging.Services.BuildServiceProvider().GetRequiredService<ILogger<Program>>();
+logger.LogInformation("Application starting...");
+
+// Add Environment Variable Debugging
 foreach (var envVar in Environment.GetEnvironmentVariables().Keys)
 {
-    Console.WriteLine($"{envVar}: {Environment.GetEnvironmentVariable(envVar.ToString())}");
+    logger.LogInformation($"{envVar}: {Environment.GetEnvironmentVariable(envVar.ToString())}");
 }
 
 builder.Services.AddControllers();
