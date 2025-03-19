@@ -65,13 +65,7 @@ const Navbar = () => {
               onClick={() => loginWithRedirect()}
               className="hover:text-darkBlue"
             >
-              Login
-            </button>
-            <button
-              onClick={() => loginWithRedirect()}
-              className="px-8 py-3 font-bold rounded text-white bg-lightGreen hover:opacity-70"
-            >
-              Signup
+              Login / Signup
             </button>
           </div>
         )}
@@ -130,13 +124,7 @@ const Navbar = () => {
                 onClick={() => loginWithRedirect()}
                 className="block px-4 py-2 font-bold rounded hover:bg-lightGreen"
               >
-                Login
-              </button>
-              <button
-                onClick={() => loginWithRedirect()}
-                className="block px-4 py-2 font-bold rounded hover:bg-lightGreen"
-              >
-                Signup
+                Login / Signup
               </button>
             </>
           )}

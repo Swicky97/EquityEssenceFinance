@@ -2,7 +2,6 @@ using api.Data;
 using api.Interfaces;
 using api.Repository;
 using api.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -12,20 +11,6 @@ builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
-
-// Add services to the container.
-
-// Add Logging
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-
-// Read Auth0 settings from environment variables with REACT_APP_ prefix
-string? auth0Domain = Environment.GetEnvironmentVariable("REACT_APP_AUTH0_DOMAIN");
-string? auth0Audience = Environment.GetEnvironmentVariable("REACT_APP_AUTH0_AUDIENCE");
-
-Console.WriteLine($"Auth0 Domain: {auth0Domain}");
-Console.WriteLine($"Auth0 Audience: {auth0Audience}");
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -67,17 +52,6 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-var auth0Settings = builder.Configuration.GetSection("Auth0");
-
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.Authority = auth0Domain;
-        options.Audience = auth0Audience;
-        options.RequireHttpsMetadata = true;
-    });
 
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();

@@ -8,7 +8,7 @@ import { PortfolioGet } from "../../Models/Portfolio";
 import { portfolioAddAPI, portfolioDeleteAPI, portfolioGetAPI } from "../../Services/PortfolioService";
 import { toast } from "react-toastify";
 
-const SearchPage = () => {
+const Dashboard = () => {
   const [search, setSearch] = useState<string>("");
   const [portfolioValues, setPortfolioValues] = useState<PortfolioGet[] | null>([]);
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
@@ -100,4 +100,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default Dashboard;

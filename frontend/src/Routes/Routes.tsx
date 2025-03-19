@@ -1,14 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import HomePage from "../Pages/HomePage/HomePage";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 import CompanyPage from "../Pages/CompanyPage/CompanyPage";
 import CompanyProfile from "../Components/CompanyProfile/CompanyProfile";
 import IncomeStatement from "../Components/IncomeStatement/IncomeStatement";
-import SearchPage from "../Pages/SearchPage/SearchPage";
 import DesignPage from "../Pages/DesignPage/DesignPage";
 import BalanceSheet from "../Components/BalanceSheet/BalanceSheet";
-import LoginPage from "../Pages/LoginPage/LoginPage";
-import ProtectedRoute from "./ProtectedRoute";
 import CashflowStatement from "../Components/CashFlowStatement/CashFlowStatement";
 import Discussion from "../Components/Discussion/Discussion";
 
@@ -18,12 +16,11 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "", element: <HomePage /> },
-      { path: "login", element: <LoginPage /> },
-      { path: "search", element: <ProtectedRoute><SearchPage /></ProtectedRoute> },
+      { path: "dashboard", element: <Dashboard /> },
       { path: "design-guide", element: <DesignPage /> },
       {
         path: "company/:ticker",
-        element: <ProtectedRoute><CompanyPage /></ProtectedRoute>,
+        element: <CompanyPage />,
         children: [
           { path: "company-profile", element: <CompanyProfile /> },
           { path: "income-statement", element: <IncomeStatement /> },
