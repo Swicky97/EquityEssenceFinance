@@ -20,7 +20,8 @@ public class FMPService : IFMPService
     {
         try 
         {
-            var result = await _httpClient.GetAsync($"https://financialmodelingprep.com/api/v3/profile/{symbol}?apikey={_config["FMPKey"]}");
+            var fmpKey = Environment.GetEnvironmentVariable("REACT_APP_FMPKey");
+            var result = await _httpClient.GetAsync($"https://financialmodelingprep.com/api/v3/profile/{symbol}?apikey={fmpKey}");
 
             if (result.IsSuccessStatusCode)
             {
