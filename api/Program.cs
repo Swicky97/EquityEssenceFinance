@@ -1,7 +1,9 @@
 using api.Data;
 using api.Interfaces;
+using api.Models;
 using api.Repository;
 using api.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -31,7 +33,6 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 builder.Services.AddScoped<IFMPService, FMPService>();
 
-// Register HttpClient for API requests
 builder.Services.AddHttpClient<IFMPService, FMPService>();
 
 // Enable Swagger for API documentation
@@ -66,33 +67,25 @@ builder.Services.AddSwaggerGen(option =>
 
 var app = builder.Build();
 
-// Enable static file serving (for frontend)
 app.UseStaticFiles();
-
-// Use HTTPS redirection
 app.UseHttpsRedirection();
 
-// Configure CORS to allow frontend requests dynamically
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()
     .WithOrigins(allowedOrigins?.Split(";") ?? new string[] { "http://localhost:3000" }));
 
-// Enable Authentication & Authorization middleware
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Map API controllers
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
-// Enable Swagger only in Development mode
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Start the app
 app.Run();

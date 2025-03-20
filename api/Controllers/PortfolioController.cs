@@ -1,47 +1,49 @@
 using api.Extensions;
 using api.Interfaces;
 using api.Models;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace api.Controllers;
 
 [Route("api/portfolio")]
 [ApiController]
+[Authorize]
 public class PortfolioController : ControllerBase
 {
-    private readonly UserManager<AppUser> _userManager;
     private readonly IStockRepository _stockRepo;
     private readonly IPortfolioRepository _portfolioRepo;
     private readonly IFMPService _fmpService;
+
     public PortfolioController(
-        UserManager<AppUser> userManager, 
         IStockRepository stockRepo, 
         IPortfolioRepository portfolioRepo,
         IFMPService fmpService
     )
     {
-        _userManager = userManager;
         _stockRepo = stockRepo;
         _portfolioRepo = portfolioRepo;
         _fmpService = fmpService;
     }
 
+    private string GetUserId()
+    {
+        return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new UnauthorizedAccessException("User ID not found.");
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetUserPortfolio()
     {
-        var username = User.GetUsername();
-        var appUser = await _userManager.FindByNameAsync(username);
-        var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser);
-
+        var userId = GetUserId();
+        var userPortfolio = await _portfolioRepo.GetUserPortfolio(userId);
         return Ok(userPortfolio);
     }
 
     [HttpPost]
     public async Task<IActionResult> AddPortfolio(string symbol)
     {
-        var username = User.GetUsername();
-        var appUser = await _userManager.FindByNameAsync(username);
+        var userId = GetUserId();
         var stock = await _stockRepo.GetBySymbolAsync(symbol);
 
         if (stock == null)
@@ -51,53 +53,39 @@ public class PortfolioController : ControllerBase
             {
                 return BadRequest("Stock does not exist");
             }
-            else 
-            {
-                await _stockRepo.CreateAsync(stock);
-            }
+            await _stockRepo.CreateAsync(stock);
         }
 
-        var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser);
+        var userPortfolio = await _portfolioRepo.GetUserPortfolio(userId);
 
-        if (userPortfolio.Any(e => e.Symbol.ToLower() == symbol.ToLower())) return BadRequest("Cannot add same stock to portfolio");
+        if (userPortfolio.Any(e => e.Symbol.ToLower() == symbol.ToLower()))
+        {
+            return BadRequest("Cannot add the same stock to portfolio");
+        }
 
         var portfolioModel = new Portfolio
         {
             StockId = stock.Id,
-            AppUserId = appUser.Id
+            AppUserId = userId
         };
 
         await _portfolioRepo.CreateAsync(portfolioModel);
-
-        if (portfolioModel == null)
-        {
-            return StatusCode(500, "Could not create");
-        }
-        else
-        {
-            return Created($"/api/portfolios", portfolioModel);
-        }
+        return Created($"/api/portfolio", portfolioModel);
     }
 
     [HttpDelete]
     public async Task<IActionResult> DeletePortfolio(string symbol)
     {
-        var username = User.GetUsername();
-        var appUser = await _userManager.FindByNameAsync(username);
+        var userId = GetUserId();
+        var userPortfolio = await _portfolioRepo.GetUserPortfolio(userId);
 
-        var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser);
-
-        var filteredStock = userPortfolio.Where(s => s.Symbol.ToLower() == symbol.ToLower()).ToList();
-
-        if (filteredStock.Count() == 1)
-        {
-            await _portfolioRepo.DeletePortfolio(appUser, symbol);
-        }
-        else
+        var filteredStock = userPortfolio.FirstOrDefault(s => s.Symbol.ToLower() == symbol.ToLower());
+        if (filteredStock == null)
         {
             return BadRequest("Stock not in your portfolio");
         }
 
+        await _portfolioRepo.DeletePortfolio(userId, symbol);
         return Ok();
     }
 }

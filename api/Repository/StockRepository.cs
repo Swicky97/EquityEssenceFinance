@@ -10,6 +10,7 @@ namespace api.Repository;
 public class StockRepository : IStockRepository
 {
     private readonly ApplicationDBContext _context;
+
     public StockRepository(ApplicationDBContext context)
     {
         _context = context;
@@ -24,7 +25,7 @@ public class StockRepository : IStockRepository
 
     public async Task<List<Stock>> GetAllAsync(QueryObject query)
     {
-        var stocks = _context.Stocks.Include(x => x.Comments).ThenInclude(x => x.AppUser).AsQueryable();
+        var stocks = _context.Stocks.Include(x => x.Comments).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(query.CompanyName))
         {
@@ -36,12 +37,9 @@ public class StockRepository : IStockRepository
             stocks = stocks.Where(x => x.Symbol.Contains(query.Symbol));
         }
 
-        if (!string.IsNullOrWhiteSpace(query.SortBy))
+        if (!string.IsNullOrWhiteSpace(query.SortBy) && query.SortBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
         {
-            if (query.SortBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
-            {
-                stocks = query.IsDescending ? stocks.OrderByDescending(x => x.Symbol) : stocks.OrderBy(x => x.Symbol);
-            }
+            stocks = query.IsDescending ? stocks.OrderByDescending(x => x.Symbol) : stocks.OrderBy(x => x.Symbol);
         }
 
         var skipNumber = (query.PageNumber - 1) * query.PageSize;
