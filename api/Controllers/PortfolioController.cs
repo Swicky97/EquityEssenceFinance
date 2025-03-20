@@ -29,7 +29,6 @@ public class PortfolioController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> GetUserPortfolio()
     {
         var username = User.GetUsername();
@@ -40,7 +39,6 @@ public class PortfolioController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
     public async Task<IActionResult> AddPortfolio(string symbol)
     {
         var username = User.GetUsername();
@@ -83,7 +81,6 @@ public class PortfolioController : ControllerBase
     }
 
     [HttpDelete]
-    [Authorize]
     public async Task<IActionResult> DeletePortfolio(string symbol)
     {
         var username = User.GetUsername();
