@@ -12,9 +12,30 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+var allowedOrigins = builder.Configuration["AllowedOrigins"];
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? Environment.GetEnvironmentVariable("DefaultConnection");
 
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
+builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+builder.Services.AddScoped<IFMPService, FMPService>();
+
+// Register HttpClient for API requests
+builder.Services.AddHttpClient<IFMPService, FMPService>();
+
+// Enable Swagger for API documentation
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
@@ -43,43 +64,35 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
-{
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-});
-
-builder.Services.AddDbContext<ApplicationDBContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.AddScoped<IStockRepository, StockRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
-builder.Services.AddScoped<IFMPService, FMPService>();
-builder.Services.AddHttpClient<IFMPService, FMPService>();
-
 var app = builder.Build();
 
-app.UseRouting();
+// Enable static file serving (for frontend)
 app.UseStaticFiles();
+
+// Use HTTPS redirection
 app.UseHttpsRedirection();
+
+// Configure CORS to allow frontend requests dynamically
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()
-    .WithOrigins("https://equityessence-bpawgvedcffvfqff.centralus-01.azurewebsites.net"));
+    .WithOrigins(allowedOrigins?.Split(";") ?? new string[] { "http://localhost:3000" }));
 
+// Enable Authentication & Authorization middleware
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Map API controllers
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
-// Configure the HTTP request pipeline.
+// Enable Swagger only in Development mode
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Start the app
 app.Run();
