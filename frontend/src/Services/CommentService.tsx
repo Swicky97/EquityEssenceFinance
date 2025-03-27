@@ -1,6 +1,6 @@
 import axios from "axios";
 import { CommentGet, CommentPost } from "../Models/Comment";
-import { HandleError } from "../Helpers/ErrorHandler";
+import { Console } from "console";
 
 const api = `${process.env.REACT_APP_API_BASE_URL}/api/comment/`;
 
@@ -16,7 +16,7 @@ export const commentPostAPI = async (
     });
     return data;
   } catch (error) {
-    HandleError(error);
+    console.log(error);
   }
 };
 
@@ -25,6 +25,6 @@ export const commentGetAPI = async (symbol: string) => {
     const data = await axios.get<CommentGet[]>(api + `?Symbol=${symbol}`);
     return data;
   } catch (error) {
-    HandleError(error);
+    console.log(error);
   }
 };

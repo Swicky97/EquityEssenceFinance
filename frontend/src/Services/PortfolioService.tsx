@@ -1,6 +1,5 @@
 import axios from "axios";
 import { PortfolioGet, PortfolioPost } from "../Models/Portfolio";
-import { HandleError } from "../Helpers/ErrorHandler";
 
 const api = `${process.env.REACT_APP_API_BASE_URL}/api/portfolio/`;
 
@@ -9,7 +8,7 @@ export const portfolioAddAPI = async (symbol: string) => {
     const data = await axios.post<PortfolioPost>(api + `?symbol=${symbol}`);
     return data;
   } catch (error) {
-    HandleError(error);
+    console.log(error);
   }
 };
 
@@ -18,7 +17,7 @@ export const portfolioGetAPI = async () => {
     const data = await axios.get<PortfolioGet[]>(api);
     return data;
   } catch (error) {
-    HandleError(error);
+    console.log(error);
   }
 };
 
@@ -27,7 +26,7 @@ export const portfolioDeleteAPI = async (symbol: string) => {
     const data = await axios.delete<PortfolioPost>(api + `?symbol=${symbol}`);
     return data;
   } catch (error) {
-    HandleError(error);
+    console.log(error);
   }
 };
 

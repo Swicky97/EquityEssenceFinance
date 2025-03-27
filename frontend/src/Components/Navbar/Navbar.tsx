@@ -23,8 +23,8 @@ const Navbar = () => {
             <img src={logo} alt="Logo" className="w-64 mt-[-16px]" />
           </Link>
           <div className="hidden font-bold lg:flex">
-            <Link to="/search" className="text-black hover:text-darkBlue">
-              Search
+            <Link to="/dashboard" className="text-black hover:text-darkBlue">
+              Dashboard
             </Link>
           </div>
         </div>
@@ -102,11 +102,11 @@ const Navbar = () => {
           {isAuthenticated ? (
             <>
               <Link
-                to="/search"
+                to="/dashboard"
                 className="block px-4 py-2 font-bold rounded hover:bg-lightGreen"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Search
+                Dashboard
               </Link>
               <button
                 onClick={() => {
