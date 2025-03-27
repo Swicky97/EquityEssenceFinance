@@ -7,8 +7,8 @@ using System.Security.Claims;
 
 namespace api.Controllers;
 
-[Route("api/portfolio")]
 [ApiController]
+[Route("api/portfolio")]
 [Authorize]
 public class PortfolioController : ControllerBase
 {

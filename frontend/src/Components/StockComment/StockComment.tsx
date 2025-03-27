@@ -5,7 +5,7 @@ import { commentGetAPI, commentPostAPI } from "../../Services/CommentService";
 import StockCommentForm from "./StockCommentForm/StockCommentForm";
 import { CommentGet } from "../../Models/Comment";
 import StockCommentList from "./StockCommentList/StockCommentList";
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 type Props = {
   stockSymbol: string;
@@ -19,13 +19,14 @@ type CommentFormInputs = {
 const StockComment = ({ stockSymbol }: Props) => {
   const [comments, setComment] = useState<CommentGet[] | null>(null);
   const [loading, setLoading] = useState<boolean>();
+  const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     getComments();
   }, []);
 
   const handleComment = (e: CommentFormInputs) => {
-    commentPostAPI(e.title, e.content, stockSymbol)
+    commentPostAPI(e.title, e.content, stockSymbol, getAccessTokenSilently)
       .then((res) => {
         if (res) {
           toast.success("Comment created successfully!");
@@ -39,7 +40,7 @@ const StockComment = ({ stockSymbol }: Props) => {
 
   const getComments = () => {
     setLoading(true);
-    commentGetAPI(stockSymbol).then((res) => {
+    commentGetAPI(stockSymbol, getAccessTokenSilently).then((res) => {
       setLoading(false);
       setComment(res!.data);
     });

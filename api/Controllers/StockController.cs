@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
-[Route("api/stock")]
 [ApiController]
+[Route("api/stock")]
 public class StockController : ControllerBase
 {
     private readonly IStockRepository _stockRepo;

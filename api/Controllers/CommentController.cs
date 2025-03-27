@@ -8,8 +8,8 @@ using System.Security.Claims;
 
 namespace api.Controllers;
 
-[Route("api/Comment")]
 [ApiController]
+[Route("api/Comment")]
 [Authorize]
 public class CommentController : ControllerBase
 {

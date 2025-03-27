@@ -7,6 +7,7 @@ import CardList from "../../Components/CardList/CardList";
 import { PortfolioGet } from "../../Models/Portfolio";
 import { portfolioAddAPI, portfolioDeleteAPI, portfolioGetAPI } from "../../Services/PortfolioService";
 import { toast } from "react-toastify";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Dashboard = () => {
   const [search, setSearch] = useState<string>("");
@@ -14,6 +15,7 @@ const Dashboard = () => {
   const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
   const [serverError, setServerError] = useState<string>("");
   const [hasSearched, setHasSearched] = useState<boolean>(false);
+  const { getAccessTokenSilently } = useAuth0();
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -24,7 +26,7 @@ const Dashboard = () => {
   }, [])
 
   const getPortfolio = () => {
-    portfolioGetAPI()
+    portfolioGetAPI(getAccessTokenSilently)
     .then((res) => {
       if (res?.data)
       {
@@ -39,7 +41,7 @@ const Dashboard = () => {
   const onPortfolioCreate = (e: any) => {
     e.preventDefault();
     console.log(e.target[0].value)
-    portfolioAddAPI(e.target[0].value)
+    portfolioAddAPI(e.target[0].value, getAccessTokenSilently)
     .then((res) => {
       console.log(res?.status)
       if (res?.status === 201) {
@@ -53,7 +55,7 @@ const Dashboard = () => {
 
   const onPortfolioDelete = (e: any) => {
     e.preventDefault();
-    portfolioDeleteAPI(e.target[0].value)
+    portfolioDeleteAPI(e.target[0].value, getAccessTokenSilently)
     .then((res) => {
       if (res?.status === 200) {
         toast.success("Stock deleted from portfolio");

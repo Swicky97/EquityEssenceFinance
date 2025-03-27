@@ -3,30 +3,53 @@ import { PortfolioGet, PortfolioPost } from "../Models/Portfolio";
 
 const api = `${process.env.REACT_APP_API_BASE_URL}/api/portfolio/`;
 
-export const portfolioAddAPI = async (symbol: string) => {
+export const portfolioAddAPI = async (symbol: string, getAccessTokenSilently: any) => {
   try {
-    const data = await axios.post<PortfolioPost>(api + `?symbol=${symbol}`);
+    const token = await getAccessTokenSilently();
+    
+    const data = await axios.post<PortfolioPost>(
+      api + `?symbol=${symbol}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const portfolioGetAPI = async () => {
+export const portfolioGetAPI = async (getAccessTokenSilently: any) => {
   try {
-    const data = await axios.get<PortfolioGet[]>(api);
+    const token = await getAccessTokenSilently();
+    
+    const data = await axios.get<PortfolioGet[]>(api, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const portfolioDeleteAPI = async (symbol: string) => {
+export const portfolioDeleteAPI = async (symbol: string, getAccessTokenSilently: any) => {
   try {
-    const data = await axios.delete<PortfolioPost>(api + `?symbol=${symbol}`);
+    const token = await getAccessTokenSilently();
+    
+    const data = await axios.delete<PortfolioPost>(api + `?symbol=${symbol}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return data;
   } catch (error) {
     console.log(error);
   }
 };
+
 
