@@ -16,12 +16,15 @@ root.render(
     <Auth0Provider
       domain={domain}
       clientId={clientId}
+      useRefreshTokens={true}
+      useRefreshTokensFallback={true}
+      cacheLocation="localstorage"
       authorizationParams={{ 
         redirect_uri: `${window.location.origin}/dashboard`, 
-        audience: audience
+        audience: audience,
+        scope: "openid profile email offline_access",
       }}
-      useRefreshTokens={true}
-      cacheLocation="localstorage"
+
     >
       <App />
     </Auth0Provider>

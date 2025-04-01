@@ -42,13 +42,23 @@ const StockComment = ({ stockSymbol }: Props) => {
     setLoading(true);
     commentGetAPI(stockSymbol, getAccessTokenSilently).then((res) => {
       setLoading(false);
-      setComment(res!.data);
+      if (res) {
+        setComment(res.data);
+      } else {
+        setComment([]);
+      }
     });
   };
   return (
     <div className="flex flex-col">
       <StockCommentForm symbol={stockSymbol} handleComment={handleComment} />
-      {loading ? <Spinner /> : <StockCommentList comments={comments!} />}
+      {loading ? (
+        <Spinner />
+      ) : comments && comments.length > 0 ? (
+        <StockCommentList comments={comments} />
+      ) : (
+        <p>No comments yet. Be the first to add a comment!</p>
+      )}
     </div>
   );
 };

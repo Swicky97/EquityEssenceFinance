@@ -1,4 +1,3 @@
-using api.Extensions;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -43,6 +42,9 @@ public class PortfolioController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddPortfolio(string symbol)
     {
+        var authHeader = Request.Headers["Authorization"];
+        Console.WriteLine($"Authorization Header: {authHeader}");
+
         var userId = GetUserId();
         var stock = await _stockRepo.GetBySymbolAsync(symbol);
 
